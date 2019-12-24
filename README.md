@@ -1,2 +1,2 @@
 # Package Analyzer
-![](https://github.com/domtheluck/PackageAnalyser/workflows/Build/badge.svg)
+![](https://github.com/domtheluck/PackageAnalyzer/workflows/Build/badge.svg)
