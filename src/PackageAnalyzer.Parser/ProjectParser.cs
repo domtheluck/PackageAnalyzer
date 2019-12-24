@@ -21,17 +21,28 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
-using PackageAnalyser.Core.Models;
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
+using PackageAnalyzer.Core.Models;
 
 namespace PackageAnalyzer.Parser
 {
     public static class ProjectParser
     {
-        public static List<ProjectItem> Parse(string projectFilename)
+        public static List<PackageItem> Parse(XDocument projectDocument)
         {
-            throw new NotImplementedException();
+            List<XElement> references = projectDocument.Descendants()
+                .Where(descendant => descendant.Name.LocalName.Equals("Reference")).ToList();
+
+            List <PackageItem> packages = new List<PackageItem>();
+
+            if (!references.Any())
+            {
+                return packages;
+            }
+
+            return packages;
         }
     }
 }

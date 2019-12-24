@@ -26,20 +26,18 @@ using Xunit;
 
 namespace PackageAnalyzer.Core.Tests.Models
 {
-    public class ProjectItemTests
+    public class PackageItemTests
     {
         [Fact]
         public void Instantiate_ValidContext_ObjectInstantiated()
         {
             // Arrange
-            const string expectedName = "MyName";
 
             // Act
-            ProjectItem projectItem = new ProjectItem(expectedName);
+            PackageItem packageItem = new PackageItem();
 
             // Assert
-            Assert.NotNull(projectItem);
-            Assert.Equal(expectedName, projectItem.Name);
+            Assert.NotNull(packageItem);
         }
     }
 }

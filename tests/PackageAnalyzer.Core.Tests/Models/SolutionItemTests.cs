@@ -21,10 +21,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
-using PackageAnalyser.Core.Models;
+using PackageAnalyzer.Core.Models;
 using Xunit;
 
-namespace PackageAnalyser.Core.Tests.Models
+namespace PackageAnalyzer.Core.Tests.Models
 {
     public class SolutionItemTests
     {

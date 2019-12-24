@@ -21,25 +21,31 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
-using PackageAnalyzer.Core.Models;
-using Xunit;
+using System;
+using System.Linq;
+using System.Xml.Linq;
 
-namespace PackageAnalyzer.Core.Tests.Models
+namespace PackageAnalyzer.Core.Extensions
 {
-    public class ProjectItemTests
+    public static class XDocumentExtensions
     {
-        [Fact]
-        public void Instantiate_ValidContext_ObjectInstantiated()
+        public static XDocument RemoveNamespaces(this XDocument document)
         {
-            // Arrange
-            const string expectedName = "MyName";
+            if (document.Root == null)
+            {
+                throw new InvalidOperationException("Document root element is null.");
+            }
 
-            // Act
-            ProjectItem projectItem = new ProjectItem(expectedName);
+            foreach (XElement xElement in document.Root.DescendantsAndSelf())
+            {
+                xElement.Name = xElement.Name.LocalName;
 
-            // Assert
-            Assert.NotNull(projectItem);
-            Assert.Equal(expectedName, projectItem.Name);
+                xElement.ReplaceAttributes(xElement.Attributes()
+                    .Where(xAttribute => !xAttribute.IsNamespaceDeclaration)
+                    .Select(attribute => new XAttribute(attribute.Name.LocalName, attribute.Value)));
+            }
+
+            return document;
         }
     }
 }

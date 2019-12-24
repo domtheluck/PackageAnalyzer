@@ -21,15 +21,13 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
-using System;
-
-namespace PackageAnalyser.Core.Models
+namespace PackageAnalyzer.Core.Models
 {
     public sealed class ProjectItem
     {
         #region Constructors
 
-        public ProjectItem(String name)
+        public ProjectItem(string name)
         {
             Name = name;
         }
@@ -38,7 +36,7 @@ namespace PackageAnalyser.Core.Models
 
         #region Properties
 
-        public String Name { get; }
+        public string Name { get; }
 
         #endregion
     }

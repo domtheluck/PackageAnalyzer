@@ -22,14 +22,13 @@
 // ***********************************************************************
 
 using Microsoft.Extensions.CommandLineUtils;
-using PackageAnalyser;
 using Serilog;
 
 namespace PackageAnalyzer
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                    .MinimumLevel.Debug()

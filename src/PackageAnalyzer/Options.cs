@@ -21,15 +21,13 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
-using System;
-
-namespace PackageAnalyser
+namespace PackageAnalyzer
 {
     internal sealed class Options
     {
         #region Constants
 
-        internal const String HelpOption = "-?|-h|--help";
+        internal const string HelpOption = "-?|-h|--help";
 
         #endregion
     }

@@ -21,25 +21,9 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
-using PackageAnalyzer.Core.Models;
-using Xunit;
-
-namespace PackageAnalyzer.Core.Tests.Models
+namespace PackageAnalyzer.Core.Models
 {
-    public class ProjectItemTests
+    public sealed class PackageItem
     {
-        [Fact]
-        public void Instantiate_ValidContext_ObjectInstantiated()
-        {
-            // Arrange
-            const string expectedName = "MyName";
-
-            // Act
-            ProjectItem projectItem = new ProjectItem(expectedName);
-
-            // Assert
-            Assert.NotNull(projectItem);
-            Assert.Equal(expectedName, projectItem.Name);
-        }
     }
 }
