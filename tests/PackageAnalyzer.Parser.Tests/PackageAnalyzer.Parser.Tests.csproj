@@ -19,19 +19,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestData\ProjectDotnetCoreWithoutPackage.xml">
+    <None Update="TestData\ProjectParser\ProjectDotnetCoreWithoutPackage.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\ProjectDotnetCoreWithPackages.xml">
+    <None Update="TestData\ProjectParser\ProjectDotnetCoreWithPackages.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\ProjectDotnetWithPackages.xml">
+    <None Update="TestData\ProjectParser\ProjectDotnetWithPackages.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\packages.xml">
+    <None Update="TestData\ProjectParser\packages.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\ProjectDotnetWithoutPackage.xml">
+    <None Update="TestData\ProjectParser\ProjectDotnetWithoutPackage.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

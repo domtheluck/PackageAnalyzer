@@ -44,14 +44,14 @@ namespace PackageAnalyzer.Parser.Tests
             // Arrange
             XDocument projectDocument = XDocument
                 .Parse(File.ReadAllText(
-                    Path.Combine(AppContext.BaseDirectory, "TestData", projectFilename)))
+                    Path.Combine(AppContext.BaseDirectory, "TestData", "ProjectParser", projectFilename)))
                 .RemoveNamespaces();
 
             XDocument packagesConfigurationDocument = string.IsNullOrEmpty(packagesConfigurationFilename)
                 ? null
                 : XDocument
                     .Parse(File.ReadAllText(
-                        Path.Combine(AppContext.BaseDirectory, "TestData", packagesConfigurationFilename)))
+                        Path.Combine(AppContext.BaseDirectory, "TestData", "ProjectParser", packagesConfigurationFilename)))
                     .RemoveNamespaces();
 
             // Act
