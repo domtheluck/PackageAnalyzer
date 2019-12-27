@@ -32,12 +32,16 @@ namespace PackageAnalyzer.Core.Tests.Models
         public void Instantiate_ValidContext_ObjectInstantiated()
         {
             // Arrange
+            const string expectedId = "myId";
+            const string expectedVersion = "myVersion";
 
             // Act
-            PackageItem packageItem = new PackageItem();
+            PackageItem packageItem = new PackageItem(expectedId, expectedVersion);
 
             // Assert
             Assert.NotNull(packageItem);
+            Assert.Equal(expectedId, packageItem.Id);
+            Assert.Equal(expectedVersion, packageItem.Version);
         }
     }
 }

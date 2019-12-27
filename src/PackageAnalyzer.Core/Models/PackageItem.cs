@@ -21,9 +21,28 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
+using System;
+
 namespace PackageAnalyzer.Core.Models
 {
     public sealed class PackageItem
     {
+        #region Constructors
+
+        public PackageItem(string id, string version)
+        {
+            Id = id;
+            Version = version;
+        }
+
+        #endregion
+
+        #region Properties
+
+        public string Id { get; }
+
+        public string Version { get; }
+
+        #endregion
     }
 }

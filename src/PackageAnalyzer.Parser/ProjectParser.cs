@@ -30,19 +30,64 @@ namespace PackageAnalyzer.Parser
 {
     public static class ProjectParser
     {
-        public static List<PackageItem> Parse(XDocument projectDocument)
+        #region Public Methods
+
+        public static List<PackageItem> Parse(XDocument projectDocument, XDocument packagesConfiguration = null)
         {
-            List<XElement> references = projectDocument.Descendants()
+            return packagesConfiguration != null
+                ? GetPackagesFromLegacyProject(projectDocument, packagesConfiguration)
+                : GetPackagesFromProject(projectDocument);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static List<PackageItem> GetPackagesFromLegacyProject(
+            XContainer projectContainer,
+            XContainer packagesConfiguration = null)
+        {
+            List<PackageItem> packages = new List<PackageItem>();
+
+            List<XElement> references = projectContainer.Descendants()
                 .Where(descendant => descendant.Name.LocalName.Equals("Reference")).ToList();
 
-            List <PackageItem> packages = new List<PackageItem>();
+            Dictionary<string, string> packagesConfig = packagesConfiguration.Descendants()
+                .Where(descendant => descendant.Name.LocalName.Equals("package"))
+                .Select(p => new {id = p.Attribute("id")?.Value, version = p.Attribute("version")?.Value})
+                .ToDictionary(item => item.id, item => item.version);
 
-            if (!references.Any())
+            foreach (XElement reference in references)
             {
-                return packages;
+                string id = reference.Attribute("Include")?.Value.Split(',').First();
+
+                if (string.IsNullOrEmpty(id))
+                {
+                    continue;
+                }
+
+                if (!packagesConfig.ContainsKey(id))
+                {
+                    continue;
+                }
+
+                packagesConfig.TryGetValue(id, out string value);
+                packages.Add(new PackageItem(id, value));
             }
 
             return packages;
         }
+
+        private static List<PackageItem> GetPackagesFromProject(XContainer projectContainer)
+        {
+            return projectContainer.Descendants()
+                .Where(descendant => descendant.Name.LocalName.Equals("PackageReference")).Select(packageReference =>
+                    new PackageItem(
+                        packageReference.Attribute("Include")?.Value,
+                        packageReference.Attribute("Version")?.Value))
+                .ToList();
+        }
+
+        #endregion
     }
 }

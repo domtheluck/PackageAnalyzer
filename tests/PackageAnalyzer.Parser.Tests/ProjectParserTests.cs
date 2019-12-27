@@ -34,8 +34,12 @@ namespace PackageAnalyzer.Parser.Tests
     public class ProjectParserTests
     {
         [Theory]
-        [InlineData("ProjectDotnetNoPackage.xml", 0)]
-        public void Parse_ValidProjectFilename_ExpectedCount(String projectFilename, int expectedCount)
+        [InlineData("ProjectDotnetWithoutPackage.xml", null, 0)]
+        [InlineData("ProjectDotnetWithPackages.xml", "packages.xml", 2)]
+        [InlineData("ProjectDotnetCoreWithoutPackage.xml", null, 0)]
+        [InlineData("ProjectDotnetCoreWithPackages.xml", null, 3)]
+        public void Parse_ValidProjectFilename_ExpectedCount(string projectFilename,
+            string packagesConfigurationFilename, int expectedCount)
         {
             // Arrange
             XDocument projectDocument = XDocument
@@ -43,11 +47,18 @@ namespace PackageAnalyzer.Parser.Tests
                     Path.Combine(AppContext.BaseDirectory, "TestData", projectFilename)))
                 .RemoveNamespaces();
 
+            XDocument packagesConfigurationDocument = string.IsNullOrEmpty(packagesConfigurationFilename)
+                ? null
+                : XDocument
+                    .Parse(File.ReadAllText(
+                        Path.Combine(AppContext.BaseDirectory, "TestData", packagesConfigurationFilename)))
+                    .RemoveNamespaces();
+
             // Act
-            List<PackageItem> packages = ProjectParser.Parse(projectDocument);
+            List<PackageItem> packages = ProjectParser.Parse(projectDocument, packagesConfigurationDocument);
 
             // Assert
-            Assert.Equal(expectedCount,packages.Count);
+            Assert.Equal(expectedCount, packages.Count);
         }
     }
 }
