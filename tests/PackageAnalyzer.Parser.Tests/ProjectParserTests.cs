@@ -37,8 +37,8 @@ namespace PackageAnalyzer.Parser.Tests
         [Theory]
         [InlineData("ProjectDotnetFrameworkWithoutPackage.zip", 0)]
         [InlineData("ProjectDotnetFrameworkWithPackages.zip", 2)]
-        //[InlineData("ProjetDotnetFrameworkWithoutPackage.zipProjectDotnetCoreWithoutPackage.xml", null, 0)]
-        //[InlineData("ProjectDotnetCoreWithPackages.xml", null, 3)]
+        [InlineData("ProjectDotnetCoreWithoutPackage.zip", 0)]
+        [InlineData("ProjectDotnetCoreWithPackages.zip", 2)]
         public void Parse_ValidProjectFilename_ExpectedCount(string packageFilename, int expectedCount)
         {
             // Arrange
