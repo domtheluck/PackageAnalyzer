@@ -25,13 +25,13 @@
     <None Update="TestData\ProjectParser\ProjectDotnetCoreWithPackages.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\ProjectParser\ProjectDotnetWithPackages.xml">
+    <None Update="TestData\ProjectParser\ProjectDotnetFrameworkWithoutPackage.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ProjectParser\ProjectDotnetFrameworkWithPackages.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\ProjectParser\packages.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\ProjectParser\ProjectDotnetWithoutPackage.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

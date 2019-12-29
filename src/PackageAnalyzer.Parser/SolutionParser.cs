@@ -21,24 +21,24 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
-using System.Collections.Generic;
+using System;
+using Microsoft.Build.Construction;
 using PackageAnalyzer.Core.Models;
-using Xunit;
 
-namespace PackageAnalyzer.Core.Tests.Models
+namespace PackageAnalyzer.Parser
 {
-    public class SolutionItemTests
+    public static class SolutionParser
     {
-        [Fact]
-        public void Instantiate_ValidContext_ObjectInstantiated()
+        public static SolutionItem Parse(string solutionFilename)
         {
-            // Arrange
+            SolutionFile solutionFile = SolutionFile.Parse(solutionFilename);
 
-            // Act
-            SolutionItem solutionItem = new SolutionItem(new List<ProjectItem>());
+            foreach(ProjectInSolution project in solutionFile.ProjectsInOrder)
+            {
 
-            // Assert
-            Assert.NotNull(solutionItem);
+            }
+
+            throw new NotImplementedException();
         }
     }
 }

@@ -21,9 +21,25 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
+using System.Collections.Generic;
+
 namespace PackageAnalyzer.Core.Models
 {
     public sealed class SolutionItem
     {
+        #region Constructors
+
+        public SolutionItem(List<ProjectItem> projects)
+        {
+            Projects = projects;
+        }
+
+        #endregion
+
+        #region Properties
+
+        private List<ProjectItem> Projects { get; }
+
+        #endregion
     }
 }

@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Xml.Linq;
 using PackageAnalyzer.Core.Extensions;
 using PackageAnalyzer.Core.Models;
@@ -34,25 +35,36 @@ namespace PackageAnalyzer.Parser.Tests
     public class ProjectParserTests
     {
         [Theory]
-        [InlineData("ProjectDotnetWithoutPackage.xml", null, 0)]
-        [InlineData("ProjectDotnetWithPackages.xml", "packages.xml", 2)]
-        [InlineData("ProjectDotnetCoreWithoutPackage.xml", null, 0)]
-        [InlineData("ProjectDotnetCoreWithPackages.xml", null, 3)]
-        public void Parse_ValidProjectFilename_ExpectedCount(string projectFilename,
-            string packagesConfigurationFilename, int expectedCount)
+        [InlineData("ProjectDotnetFrameworkWithoutPackage.zip", 0)]
+        [InlineData("ProjectDotnetFrameworkWithPackages.zip", 2)]
+        //[InlineData("ProjetDotnetFrameworkWithoutPackage.zipProjectDotnetCoreWithoutPackage.xml", null, 0)]
+        //[InlineData("ProjectDotnetCoreWithPackages.xml", null, 3)]
+        public void Parse_ValidProjectFilename_ExpectedCount(string packageFilename, int expectedCount)
         {
             // Arrange
+            string basePath = Path.Combine(AppContext.BaseDirectory, "TestData", "ProjectParser");
+            string folderName = Path.GetFileNameWithoutExtension(packageFilename);
+            string extractedFolderPath = Path.Combine(basePath, folderName);
+
+            ZipFile.ExtractToDirectory(Path.Combine(basePath, packageFilename), basePath, true);
+
             XDocument projectDocument = XDocument
                 .Parse(File.ReadAllText(
-                    Path.Combine(AppContext.BaseDirectory, "TestData", "ProjectParser", projectFilename)))
+                    Path.Combine(extractedFolderPath, $"{folderName}.csproj")))
                 .RemoveNamespaces();
 
-            XDocument packagesConfigurationDocument = string.IsNullOrEmpty(packagesConfigurationFilename)
-                ? null
-                : XDocument
+            string packageConfigurationFilename = Path.Combine(extractedFolderPath, "packages.config");
+
+            XDocument packagesConfigurationDocument = null;
+
+            if (File.Exists(packageConfigurationFilename))
+            {
+                packagesConfigurationDocument= XDocument
                     .Parse(File.ReadAllText(
-                        Path.Combine(AppContext.BaseDirectory, "TestData", "ProjectParser", packagesConfigurationFilename)))
+                        Path.Combine(AppContext.BaseDirectory, "TestData", "ProjectParser",
+                            packageConfigurationFilename)))
                     .RemoveNamespaces();
+            }
 
             // Act
             List<PackageItem> packages = ProjectParser.Parse(projectDocument, packagesConfigurationDocument);
