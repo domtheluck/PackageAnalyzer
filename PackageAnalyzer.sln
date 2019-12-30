@@ -13,9 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackageAnalyzer.Core", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackageAnalyzer.Core.Tests", "tests\PackageAnalyzer.Core.Tests\PackageAnalyzer.Core.Tests.csproj", "{06C12BF5-84D6-423D-BAFE-68516B9EFE16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageAnalyzer.Parser", "src\PackageAnalyzer.Parser\PackageAnalyzer.Parser.csproj", "{8366A910-F157-46BE-B7D1-30ECF30D7E95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackageAnalyzer.Parser", "src\PackageAnalyzer.Parser\PackageAnalyzer.Parser.csproj", "{8366A910-F157-46BE-B7D1-30ECF30D7E95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageAnalyzer.Parser.Tests", "tests\PackageAnalyzer.Parser.Tests\PackageAnalyzer.Parser.Tests.csproj", "{0785A6F0-5FC3-49DA-ABEB-96C0A17BD23B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackageAnalyzer.Parser.Tests", "tests\PackageAnalyzer.Parser.Tests\PackageAnalyzer.Parser.Tests.csproj", "{0785A6F0-5FC3-49DA-ABEB-96C0A17BD23B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageAnalyser.Analyser", "src\PackageAnalyser.Analyser\PackageAnalyser.Analyser.csproj", "{D77B35F0-0216-4130-A9B2-B0E93D76EE69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageAnalyser.Analyser.Tests", "tests\PackageAnalyser.Analyser.Tests\PackageAnalyser.Analyser.Tests.csproj", "{5AEA06BA-444D-4865-A3FF-8CD2D510BD6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,14 @@ Global
 		{0785A6F0-5FC3-49DA-ABEB-96C0A17BD23B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0785A6F0-5FC3-49DA-ABEB-96C0A17BD23B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0785A6F0-5FC3-49DA-ABEB-96C0A17BD23B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D77B35F0-0216-4130-A9B2-B0E93D76EE69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D77B35F0-0216-4130-A9B2-B0E93D76EE69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D77B35F0-0216-4130-A9B2-B0E93D76EE69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D77B35F0-0216-4130-A9B2-B0E93D76EE69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AEA06BA-444D-4865-A3FF-8CD2D510BD6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AEA06BA-444D-4865-A3FF-8CD2D510BD6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AEA06BA-444D-4865-A3FF-8CD2D510BD6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AEA06BA-444D-4865-A3FF-8CD2D510BD6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +65,8 @@ Global
 		{06C12BF5-84D6-423D-BAFE-68516B9EFE16} = {0AB292D4-4CBE-41ED-9778-ECF3379CC07C}
 		{8366A910-F157-46BE-B7D1-30ECF30D7E95} = {880FA0F3-A775-42B9-92D0-86AD4E5B28EA}
 		{0785A6F0-5FC3-49DA-ABEB-96C0A17BD23B} = {0AB292D4-4CBE-41ED-9778-ECF3379CC07C}
+		{D77B35F0-0216-4130-A9B2-B0E93D76EE69} = {880FA0F3-A775-42B9-92D0-86AD4E5B28EA}
+		{5AEA06BA-444D-4865-A3FF-8CD2D510BD6D} = {0AB292D4-4CBE-41ED-9778-ECF3379CC07C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A4EE10BB-2654-47F4-B757-3394C40940A2}
