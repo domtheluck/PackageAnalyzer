@@ -4,6 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Version>0.1.0</Version>
+
+    <Authors>Dominik Lachance</Authors>
+
+    <Company />
   </PropertyGroup>
 
   <ItemGroup>
