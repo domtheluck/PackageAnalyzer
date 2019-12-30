@@ -25,8 +25,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Xml.Linq;
-using PackageAnalyzer.Core.Extensions;
 using PackageAnalyzer.Core.Models;
 using Xunit;
 
@@ -48,29 +46,24 @@ namespace PackageAnalyzer.Parser.Tests
 
             ZipFile.ExtractToDirectory(Path.Combine(basePath, packageFilename), basePath, true);
 
-            XDocument projectDocument = XDocument
-                .Parse(File.ReadAllText(
-                    Path.Combine(extractedFolderPath, $"{folderName}.csproj")))
-                .RemoveNamespaces();
-
-            string packageConfigurationFilename = Path.Combine(extractedFolderPath, "packages.config");
-
-            XDocument packagesConfigurationDocument = null;
-
-            if (File.Exists(packageConfigurationFilename))
-            {
-                packagesConfigurationDocument= XDocument
-                    .Parse(File.ReadAllText(
-                        Path.Combine(AppContext.BaseDirectory, "TestData", "ProjectParser",
-                            packageConfigurationFilename)))
-                    .RemoveNamespaces();
-            }
-
             // Act
-            List<PackageItem> packages = ProjectParser.Parse(projectDocument, packagesConfigurationDocument);
+            List<PackageItem> packages = ProjectParser.Parse(Path.Combine(extractedFolderPath, $"{folderName}.csproj"));
 
             // Assert
             Assert.Equal(expectedCount, packages.Count);
+        }
+
+        [Fact]
+        public void Parse_InvalidProjectFilename_ArgumentExceptionThrown()
+        {
+            // Arrange
+            string filename = "myFileName";
+
+            // Act
+            ArgumentException exception = Assert.Throws<ArgumentException>(() => ProjectParser.Parse(filename));
+
+            // Assert
+            Assert.Equal($"Cannot find project {filename}", exception.Message);
         }
     }
 }

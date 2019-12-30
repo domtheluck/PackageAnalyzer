@@ -21,9 +21,12 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using PackageAnalyzer.Core.Extensions;
 using PackageAnalyzer.Core.Models;
 
 namespace PackageAnalyzer.Parser
@@ -32,10 +35,26 @@ namespace PackageAnalyzer.Parser
     {
         #region Public Methods
 
-        public static List<PackageItem> Parse(XDocument projectDocument, XDocument packagesConfiguration = null)
+        public static List<PackageItem> Parse(string filename)
         {
-            return packagesConfiguration != null
-                ? GetPackagesFromLegacyProject(projectDocument, packagesConfiguration)
+            if (!File.Exists(filename))
+            {
+                throw new ArgumentException($"Cannot find project {filename}");
+            }
+
+            XDocument projectDocument = XDocument.Parse(File.ReadAllText(filename)).RemoveNamespaces();
+
+            string packageConfigurationFilename = Path.Combine(Path.GetDirectoryName(filename), "packages.config");
+
+            XDocument packageConfigurationDocument = null;
+
+            if (File.Exists(packageConfigurationFilename))
+            {
+                packageConfigurationDocument = XDocument.Parse(File.ReadAllText(packageConfigurationFilename));
+            }
+
+            return packageConfigurationDocument != null
+                ? GetPackagesFromLegacyProject(projectDocument, packageConfigurationDocument)
                 : GetPackagesFromProject(projectDocument);
         }
 
