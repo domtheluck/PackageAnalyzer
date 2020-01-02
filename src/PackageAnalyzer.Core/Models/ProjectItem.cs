@@ -21,15 +21,18 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
+using System.Collections.Generic;
+
 namespace PackageAnalyzer.Core.Models
 {
     public sealed class ProjectItem
     {
         #region Constructors
 
-        public ProjectItem(string name)
+        public ProjectItem(string name, List<PackageItem> packages)
         {
             Name = name;
+            Packages = packages;
         }
 
         #endregion
@@ -37,6 +40,8 @@ namespace PackageAnalyzer.Core.Models
         #region Properties
 
         public string Name { get; }
+
+        public List<PackageItem> Packages { get; }
 
         #endregion
     }

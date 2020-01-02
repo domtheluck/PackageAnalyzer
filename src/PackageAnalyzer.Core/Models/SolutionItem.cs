@@ -38,7 +38,7 @@ namespace PackageAnalyzer.Core.Models
 
         #region Properties
 
-        private List<ProjectItem> Projects { get; }
+        public List<ProjectItem> Projects { get; }
 
         #endregion
     }

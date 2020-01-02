@@ -1,4 +1,4 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // Copyright (c) 2019 Dominik Lachance
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -29,40 +29,47 @@ using Xunit;
 
 namespace PackageAnalyzer.Parser.Tests
 {
-    public class ProjectParserTests
+    public class SolutionParserTests
     {
         [Theory]
-        [InlineData("ProjectDotnetFrameworkWithoutPackage.zip", 0)]
-        [InlineData("ProjectDotnetFrameworkWithPackages.zip", 2)]
-        [InlineData("ProjectDotnetCoreWithoutPackage.zip", 0)]
-        [InlineData("ProjectDotnetCoreWithPackages.zip", 2)]
-        public void Parse_ValidProjectFilename_ExpectedPackageCount(string packageFilename, int expectedCount)
+        [InlineData("SolutionDotnetFrameworkTwoProjects.zip", 2)]
+        [InlineData("SolutionMixedFrameworksThreeProjects.zip", 3)]
+        public void Parse_ValidSolution_ExpectedProjectCount(string packageFilename, int expectedCount)
         {
             // Arrange
-            string basePath = Path.Combine(AppContext.BaseDirectory, "TestData", "ProjectParser");
+            string basePath = Path.Combine(AppContext.BaseDirectory, "TestData", "SolutionParser");
             string folderName = Path.GetFileNameWithoutExtension(packageFilename);
             string extractedFolderPath = Path.Combine(basePath, folderName);
 
             ZipFile.ExtractToDirectory(Path.Combine(basePath, packageFilename), basePath, true);
 
             // Act
-            ProjectItem project = ProjectParser.Parse(Path.Combine(extractedFolderPath, $"{folderName}.csproj"));
+            SolutionItem solution = SolutionParser.Parse(Path.Combine(extractedFolderPath, $"{folderName}.sln"));
 
             // Assert
-            Assert.Equal(expectedCount, project.Packages.Count);
+            Assert.Equal(expectedCount, solution.Projects.Count);
         }
 
-        [Fact]
-        public void Parse_InvalidProjectFilename_ArgumentExceptionThrown()
-        {
-            // Arrange
-            const string filename = "myFileName";
+        //[Fact]
+        //public void Parse_ValidSolution_ExpectedProjectOrder()
+        //{
 
-            // Act
-            ArgumentException exception = Assert.Throws<ArgumentException>(() => ProjectParser.Parse(filename));
+        //    // Arrange
+        //    const string packageFilename = "SolutionWithProjectDependencies.zip";
 
-            // Assert
-            Assert.Equal($"Cannot find project {filename}", exception.Message);
-        }
+        //    string basePath = Path.Combine(AppContext.BaseDirectory, "TestData", "SolutionParser");
+        //    string folderName = Path.GetFileNameWithoutExtension(packageFilename);
+        //    string extractedFolderPath = Path.Combine(basePath, folderName);
+
+        //    ZipFile.ExtractToDirectory(Path.Combine(basePath, packageFilename), basePath, true);
+
+        //    // Act
+        //    SolutionItem solution = SolutionParser.Parse(Path.Combine(extractedFolderPath, $"{folderName}.sln"));
+
+        //    // Assert
+        //    Assert.Equal("ProjectC", solution.Projects[0].Name);
+        //    Assert.Equal("ProjectA", solution.Projects[1].Name);
+        //    Assert.Equal("ProjectB", solution.Projects[2].Name);
+        //}
     }
 }

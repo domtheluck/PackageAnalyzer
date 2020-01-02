@@ -37,6 +37,15 @@
     <None Update="TestData\ProjectParser\ProjectDotnetFrameworkWithPackages.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\SolutionParser\SolutionDotnetFrameworkTwoProjects.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\SolutionParser\SolutionMixedFrameworksThreeProjects.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\SolutionParser\SolutionWithProjectDependencies.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

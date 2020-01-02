@@ -21,7 +21,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Build.Construction;
 using PackageAnalyzer.Core.Models;
 
@@ -33,12 +34,10 @@ namespace PackageAnalyzer.Parser
         {
             SolutionFile solutionFile = SolutionFile.Parse(solutionFilename);
 
-            foreach(ProjectInSolution project in solutionFile.ProjectsInOrder)
-            {
+            List<ProjectItem> projects = solutionFile.ProjectsInOrder
+                .Select(project => ProjectParser.Parse(project.AbsolutePath)).ToList();
 
-            }
-
-            throw new NotImplementedException();
+            return new SolutionItem(projects);
         }
     }
 }

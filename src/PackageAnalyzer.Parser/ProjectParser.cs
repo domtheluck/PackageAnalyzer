@@ -35,7 +35,7 @@ namespace PackageAnalyzer.Parser
     {
         #region Public Methods
 
-        public static List<PackageItem> Parse(string filename)
+        public static ProjectItem Parse(string filename)
         {
             if (!File.Exists(filename))
             {
@@ -54,8 +54,9 @@ namespace PackageAnalyzer.Parser
             }
 
             return packageConfigurationDocument != null
-                ? GetPackagesFromLegacyProject(projectDocument, packageConfigurationDocument)
-                : GetPackagesFromProject(projectDocument);
+                ? new ProjectItem(Path.GetFileNameWithoutExtension(filename),
+                    GetPackagesFromLegacyProject(projectDocument, packageConfigurationDocument))
+                : new ProjectItem(Path.GetFileNameWithoutExtension(filename), GetPackagesFromProject(projectDocument));
         }
 
         #endregion
