@@ -35,7 +35,7 @@ namespace PackageAnalyzer.Parser
             SolutionFile solutionFile = SolutionFile.Parse(solutionFilename);
 
             List<ProjectItem> projects = solutionFile.ProjectsInOrder
-                .Select(project => ProjectParser.Parse(project.AbsolutePath)).ToList();
+                .Select(project => ProjectParser.Parse(project.AbsolutePath, project.ProjectGuid)).ToList();
 
             return new SolutionItem(projects);
         }

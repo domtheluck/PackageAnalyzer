@@ -29,9 +29,10 @@ namespace PackageAnalyzer.Core.Models
     {
         #region Constructors
 
-        public ProjectItem(string name, List<PackageItem> packages)
+        public ProjectItem(string name, string guid, List<PackageItem> packages)
         {
             Name = name;
+            Guid = guid;
             Packages = packages;
         }
 
@@ -40,6 +41,8 @@ namespace PackageAnalyzer.Core.Models
         #region Properties
 
         public string Name { get; }
+
+        public string Guid { get; }
 
         public List<PackageItem> Packages { get; }
 

@@ -21,6 +21,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
+using System;
 using System.Collections.Generic;
 using PackageAnalyzer.Core.Models;
 using Xunit;
@@ -36,7 +37,10 @@ namespace PackageAnalyzer.Core.Tests.Models
             const string expectedName = "MyName";
 
             // Act
-            ProjectItem projectItem = new ProjectItem(expectedName, new List<PackageItem>{new PackageItem("MyPackageId", "MyPackageVersion")});
+            ProjectItem projectItem = new ProjectItem(
+                expectedName, 
+                Guid.NewGuid().ToString(),
+                new List<PackageItem> {new PackageItem("MyPackageId", "MyPackageVersion")});
 
             // Assert
             Assert.NotNull(projectItem);
