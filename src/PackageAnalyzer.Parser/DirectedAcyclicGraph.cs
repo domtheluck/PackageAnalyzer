@@ -89,18 +89,18 @@ namespace PackageAnalyzer.Parser
 
                 int indexFrom = nodes.IndexOf(node);
 
-                foreach (KeyValuePair<int, List<int>> item in edges)
+                foreach ((int key, List<int> value) in edges)
                 {
-                    if (!item.Value.Contains(indexFrom))
+                    if (!value.Contains(indexFrom))
                     {
                         continue;
                     }
 
-                    item.Value.Remove(indexFrom);
+                    value.Remove(indexFrom);
 
-                    if (item.Value.Count == 0)
+                    if (value.Count == 0)
                     {
-                        nodesWithoutIncomingEdges.Add(item.Key);
+                        nodesWithoutIncomingEdges.Add(key);
                     }
                 }
             }
