@@ -1,12 +1,45 @@
-﻿using System;
+﻿// ***********************************************************************
+// Copyright (c) 2019 Dominik Lachance
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// ***********************************************************************
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PackageAnalyzer.Parser
 {
+    /// <summary>
+    /// Used to order a list of nodes based on their dependencies.
+    /// </summary>
+    /// <typeparam name="T">Node type.</typeparam>
     internal class DirectedAcyclicGraph<T>
     {
+        #region Private Members
+
+        private readonly IList<T> _nodes = new List<T>();
+        private readonly IDictionary<int, List<int>> _edges = new Dictionary<int, List<int>>();
+
+        #endregion
+
         #region Public Methods
 
         public void AddEdge(T item, T dependency)
@@ -72,12 +105,6 @@ namespace PackageAnalyzer.Parser
                 }
             }
 
-            // if graph has edges then
-            // output error message (graph has at least one cycle)
-            // else 
-            // output message (proposed topologically sorted order: L)
-
-
             if (edges.Values.Any(item => item.Count != 0))
             {
                 throw new ApplicationException("Circular dependency detected!");
@@ -87,144 +114,10 @@ namespace PackageAnalyzer.Parser
         }
 
         private int IndexOf(T item)
-
         {
             return _nodes.IndexOf(item);
         }
 
         #endregion
-
-        #region Private Members
-
-        private readonly IList<T> _nodes = new List<T>();
-        private readonly IDictionary<int, List<int>> _edges = new Dictionary<int, List<int>>();
-
-        #endregion
-
-        //#region Operations
-
-
-        //public T[] Sort()
-
-        //{
-
-        //    IList<T> Nodes = new List<T>(nodes_);
-
-        //    IDictionary<Int32, List<Int32>> Edges = new Dictionary<Int32, List<Int32>>(edges_);
-
-
-        //    // L ← Empty list that will contain the sorted elements
-
-        //    // S ← Set of all nodes with no incoming edges
-
-
-        //    List<T> L = new List<T>(Nodes.Count);
-
-        //    List<Int32> S = new List<int>(Nodes.Count);
-
-        //    foreach (Int32 index in Edges.Keys)
-
-        //        if (Edges[index].Count == 0)
-
-        //            S.Add(index);
-
-
-        //    // while S is non-empty do
-
-        //    // remove a node n from S
-
-        //    // insert n into L
-
-        //    // for each node m with an edge e from n to m do
-
-        //    // remove edge e from the graph
-
-        //    // if m has no other incoming edges then
-
-        //    // insert m into S
-
-
-        //    while (S.Count != 0)
-
-        //    {
-
-        //        T node = Nodes[S[0]];
-
-        //        S.RemoveAt(0);
-
-
-        //        L.Add(node);
-
-
-        //        Int32 index_from = Nodes.IndexOf(node);
-
-
-        //        foreach (KeyValuePair<Int32, List<Int32>> item in Edges)
-
-        //        {
-
-        //            if (item.Value.Contains(index_from))
-
-        //            {
-
-        //                item.Value.Remove(index_from);
-
-        //                if (item.Value.Count == 0)
-
-        //                    S.Add(item.Key);
-
-        //            }
-
-        //        }
-
-        //    }
-
-
-        //    // if graph has edges then
-
-        //    // output error message (graph has at least one cycle)
-
-        //    // else 
-
-        //    // output message (proposed topologically sorted order: L)
-
-
-        //    foreach (List<Int32> item in Edges.Values)
-
-        //        if (item.Count != 0)
-
-        //            throw new ApplicationException("Circular dependency detected!");
-
-
-        //    return L.ToArray();
-
-        //}
-
-
-        //public T[] Sort(bool reverse)
-
-        //{
-
-        //    T[] array = Sort();
-
-        //    if (reverse)
-
-        //        Array.Reverse(array);
-
-        //    return array;
-
-        //}
-
-
-        //#endregion
-
-
-        //#region Implementation
-
-
-        
-
-
-        //#endregion
     }
 }
