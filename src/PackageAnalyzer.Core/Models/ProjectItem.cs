@@ -21,6 +21,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
+using System;
 using System.Collections.Generic;
 
 namespace PackageAnalyzer.Core.Models
@@ -29,11 +30,16 @@ namespace PackageAnalyzer.Core.Models
     {
         #region Constructors
 
-        public ProjectItem(string name, string guid, List<PackageItem> packages)
+        public ProjectItem(
+            string name,
+            string guid,
+            IReadOnlyList<PackageReferenceItem> packageReferences,
+            IReadOnlyList<ProjectReferenceItem> projectReferences)
         {
             Name = name;
             Guid = guid;
-            Packages = packages;
+            PackageReferences = packageReferences;
+            ProjectReferences = projectReferences;
         }
 
         #endregion
@@ -44,7 +50,9 @@ namespace PackageAnalyzer.Core.Models
 
         public string Guid { get; }
 
-        public List<PackageItem> Packages { get; }
+        public IReadOnlyList<PackageReferenceItem> PackageReferences { get; }
+
+        public IReadOnlyList<ProjectReferenceItem> ProjectReferences { get; }
 
         #endregion
     }

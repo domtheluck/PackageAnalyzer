@@ -44,6 +44,27 @@ namespace PackageAnalyzer.Parser
 
             XDocument projectDocument = XDocument.Parse(File.ReadAllText(filename)).RemoveNamespaces();
 
+            List<PackageReferenceItem> packageReferences = ParsePackageReferences(filename, projectDocument);
+            List<ProjectReferenceItem> projectReferences = ParseProjectReferences(projectDocument);
+
+            return new ProjectItem(Path.GetFileNameWithoutExtension(filename), guid, packageReferences,
+                projectReferences);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static List<ProjectReferenceItem> ParseProjectReferences(XDocument projectDocument)
+        {
+            return projectDocument.Descendants()
+                .Where(descendant => descendant.Name.LocalName.Equals("ProjectReference")).Select(projectReference =>
+                    new ProjectReferenceItem(projectReference.Value))
+                .ToList();
+        }
+
+        private static List<PackageReferenceItem> ParsePackageReferences(string filename, XDocument projectDocument)
+        {
             string packageConfigurationFilename = Path.Combine(Path.GetDirectoryName(filename), "packages.config");
 
             XDocument packageConfigurationDocument = null;
@@ -54,23 +75,15 @@ namespace PackageAnalyzer.Parser
             }
 
             return packageConfigurationDocument != null
-                ? new ProjectItem(Path.GetFileNameWithoutExtension(filename),
-                    guid,
-                    GetPackagesFromLegacyProject(projectDocument, packageConfigurationDocument))
-                : new ProjectItem(Path.GetFileNameWithoutExtension(filename), 
-                    guid,
-                    GetPackagesFromProject(projectDocument));
+                ? GetPackageReferencesFromLegacyProject(projectDocument, packageConfigurationDocument)
+                : GetPackageReferencesFromProject(projectDocument);
         }
 
-        #endregion
-
-        #region Private Methods
-
-        private static List<PackageItem> GetPackagesFromLegacyProject(
+        private static List<PackageReferenceItem> GetPackageReferencesFromLegacyProject(
             XContainer projectContainer,
             XContainer packagesConfiguration = null)
         {
-            List<PackageItem> packages = new List<PackageItem>();
+            List<PackageReferenceItem> packages = new List<PackageReferenceItem>();
 
             List<XElement> references = projectContainer.Descendants()
                 .Where(descendant => descendant.Name.LocalName.Equals("Reference")).ToList();
@@ -95,17 +108,17 @@ namespace PackageAnalyzer.Parser
                 }
 
                 packagesConfig.TryGetValue(id, out string value);
-                packages.Add(new PackageItem(id, value));
+                packages.Add(new PackageReferenceItem(id, value));
             }
 
             return packages;
         }
 
-        private static List<PackageItem> GetPackagesFromProject(XContainer projectContainer)
+        private static List<PackageReferenceItem> GetPackageReferencesFromProject(XContainer projectContainer)
         {
             return projectContainer.Descendants()
                 .Where(descendant => descendant.Name.LocalName.Equals("PackageReference")).Select(packageReference =>
-                    new PackageItem(
+                    new PackageReferenceItem(
                         packageReference.Attribute("Include")?.Value,
                         packageReference.Attribute("Version")?.Value))
                 .ToList();

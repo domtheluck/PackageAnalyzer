@@ -25,11 +25,11 @@ using System;
 
 namespace PackageAnalyzer.Core.Models
 {
-    public sealed class PackageItem
+    public sealed class PackageReferenceItem
     {
         #region Constructors
 
-        public PackageItem(string id, string version)
+        public PackageReferenceItem(string id, string version)
         {
             Id = id;
             Version = version;

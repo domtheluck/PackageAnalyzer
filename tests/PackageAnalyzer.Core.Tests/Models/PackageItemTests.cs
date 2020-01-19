@@ -36,7 +36,7 @@ namespace PackageAnalyzer.Core.Tests.Models
             const string expectedVersion = "myVersion";
 
             // Act
-            PackageItem packageItem = new PackageItem(expectedId, expectedVersion);
+            PackageReferenceItem packageItem = new PackageReferenceItem(expectedId, expectedVersion);
 
             // Assert
             Assert.NotNull(packageItem);

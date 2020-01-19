@@ -46,10 +46,12 @@ namespace PackageAnalyzer.Parser.Tests
             ZipFile.ExtractToDirectory(Path.Combine(basePath, packageFilename), basePath, true);
 
             // Act
-            ProjectItem project = ProjectParser.Parse(Path.Combine(extractedFolderPath, $"{folderName}.csproj"), Guid.NewGuid().ToString());
+            ProjectItem project = ProjectParser.Parse(
+                Path.Combine(extractedFolderPath, $"{folderName}.csproj"),
+                Guid.NewGuid().ToString());
 
             // Assert
-            Assert.Equal(expectedCount, project.Packages.Count);
+            Assert.Equal(expectedCount, project.PackageReferences.Count);
         }
 
         [Fact]
@@ -59,7 +61,8 @@ namespace PackageAnalyzer.Parser.Tests
             const string filename = "myFileName";
 
             // Act
-            ArgumentException exception = Assert.Throws<ArgumentException>(() => ProjectParser.Parse(filename, Guid.NewGuid().ToString()));
+            ArgumentException exception =
+                Assert.Throws<ArgumentException>(() => ProjectParser.Parse(filename, Guid.NewGuid().ToString()));
 
             // Assert
             Assert.Equal($"Cannot find project {filename}", exception.Message);

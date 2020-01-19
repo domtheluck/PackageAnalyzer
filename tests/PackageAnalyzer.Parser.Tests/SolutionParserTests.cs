@@ -50,26 +50,25 @@ namespace PackageAnalyzer.Parser.Tests
             Assert.Equal(expectedCount, solution.Projects.Count);
         }
 
-        //[Fact]
-        //public void Parse_ValidSolution_ExpectedProjectOrder()
-        //{
+        [Fact]
+        public void Parse_ValidSolution_ExpectedProjectOrder()
+        {
+            // Arrange
+            const string packageFilename = "SolutionWithProjectDependencies.zip";
 
-        //    // Arrange
-        //    const string packageFilename = "SolutionWithProjectDependencies.zip";
+            string basePath = Path.Combine(AppContext.BaseDirectory, "TestData", "SolutionParser");
+            string folderName = Path.GetFileNameWithoutExtension(packageFilename);
+            string extractedFolderPath = Path.Combine(basePath, folderName);
 
-        //    string basePath = Path.Combine(AppContext.BaseDirectory, "TestData", "SolutionParser");
-        //    string folderName = Path.GetFileNameWithoutExtension(packageFilename);
-        //    string extractedFolderPath = Path.Combine(basePath, folderName);
+            ZipFile.ExtractToDirectory(Path.Combine(basePath, packageFilename), basePath, true);
 
-        //    ZipFile.ExtractToDirectory(Path.Combine(basePath, packageFilename), basePath, true);
+            // Act
+            SolutionItem solution = SolutionParser.Parse(Path.Combine(extractedFolderPath, $"{folderName}.sln"));
 
-        //    // Act
-        //    SolutionItem solution = SolutionParser.Parse(Path.Combine(extractedFolderPath, $"{folderName}.sln"));
-
-        //    // Assert
-        //    Assert.Equal("ProjectC", solution.Projects[0].Name);
-        //    Assert.Equal("ProjectA", solution.Projects[1].Name);
-        //    Assert.Equal("ProjectB", solution.Projects[2].Name);
-        //}
+            // Assert
+            Assert.Equal("ProjectC", solution.Projects[0].Name);
+            Assert.Equal("ProjectB", solution.Projects[1].Name);
+            Assert.Equal("ProjectA", solution.Projects[2].Name);
+        }
     }
 }

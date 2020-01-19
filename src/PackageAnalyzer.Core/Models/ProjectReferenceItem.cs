@@ -21,32 +21,30 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ***********************************************************************
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 
 namespace PackageAnalyzer.Core.Models
 {
-    public sealed class SolutionItem
+    public sealed class ProjectReferenceItem
     {
         #region Constructors
 
-        public SolutionItem(List<ProjectItem> projects)
+        public ProjectReferenceItem(string relativePath)
         {
-            _projects = projects;
+            Name = Path.GetFileName(relativePath);
+            RelativePath = relativePath;
+            AbsolutePath = Path.GetFullPath(relativePath);
         }
 
         #endregion
 
         #region Properties
 
-        public IReadOnlyList<ProjectItem> Projects => _projects;
+        public string Name { get; internal set; }
 
-        #endregion
+        public string RelativePath { get; internal set; }
 
-        #region Private Members
-
-        private readonly List<ProjectItem> _projects;
+        public string AbsolutePath { get; internal set; }
 
         #endregion
     }
